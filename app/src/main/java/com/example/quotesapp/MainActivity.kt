@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.quotesapp.screens.QuoteDetail
 import com.example.quotesapp.screens.QuoteListScreen
 import com.example.quotesapp.ui.theme.QuotesAppTheme
 import kotlinx.coroutines.CoroutineScope
@@ -28,11 +29,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+enum class Pages{
+    LISTINGPAGE,
+    DETAILPAGE
+}
 
 @Composable
 fun App() {
     if (DataManager.isDataLoaded.value){
+        if (DataManager.currentPage.value == Pages.LISTINGPAGE){
         QuoteListScreen(data = DataManager.data) {
+            DataManager.switchPage(it)
+        }
+        }else{
+            DataManager.currentQuote?.let { QuoteDetail(quoteData = it) }
         }
     }
 }

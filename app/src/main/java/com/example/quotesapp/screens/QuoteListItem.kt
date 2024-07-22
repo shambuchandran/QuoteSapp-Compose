@@ -31,10 +31,12 @@ import com.example.quotesapp.models.QuoteData
 
 
 @Composable
-fun QuoteListItem(quoteData: QuoteData, onClick:()-> Unit) {
+fun QuoteListItem(quoteData: QuoteData, onClick:(quoteData:QuoteData)-> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(4.dp),
-        modifier = Modifier.padding(8.dp).clickable { onClick() }
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable { onClick(quoteData) }
     ) {
         Row(modifier = Modifier.padding(16.dp)) {
             Image(

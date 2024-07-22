@@ -8,6 +8,8 @@ import java.nio.charset.Charset
 
 object DataManager {
     var data= emptyArray<QuoteData>()
+    var currentQuote:QuoteData?=null
+    var currentPage= mutableStateOf(Pages.LISTINGPAGE)
     var isDataLoaded= mutableStateOf(false)
     fun loadAssetsFromFile(context: Context){
         val inputStream=context.assets.open("quote.json")
@@ -19,5 +21,13 @@ object DataManager {
         val gson=Gson()
         data=gson.fromJson(json,Array<QuoteData>::class.java)
         isDataLoaded.value=true
+    }
+    fun switchPage(quoteData:QuoteData?){
+        if (currentPage.value == Pages.LISTINGPAGE){
+            currentQuote=quoteData
+            currentPage.value=Pages.DETAILPAGE
+        }else{
+            currentPage.value=Pages.LISTINGPAGE
+        }
     }
 }
